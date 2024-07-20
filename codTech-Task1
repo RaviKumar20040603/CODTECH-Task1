@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+#define TOTAL_QUESTIONS 3
+typedef struct {
+    char question[256];
+    char options[4][100];
+    char answer;
+} QuizQuestion;
+
+void displayQuestion(QuizQuestion q) {
+    printf("%s\n", q.question);
+    for (int i = 0; i < 4; i++) {
+        printf("%c. %s\n", 'A' + i, q.options[i]);
+    }
+}
+
+int main() {
+    QuizQuestion quiz[TOTAL_QUESTIONS] = {
+        {
+            "What is the capital of France?",
+            {"Berlin", "Madrid", "Paris", "Rome"},
+            'C'
+        },
+        {
+            "Which planet is known as the Red Planet?",
+            {"Earth", "Mars", "Jupiter", "Saturn"},
+            'B'
+        },
+        {
+            "What is the largest mammal in the world?",
+            {"Elephant", "Blue Whale", "Giraffe", "Great White Shark"},
+            'B'
+        }
+    };
+
+    int score = 0;
+    char userAnswer;
+
+    printf("Welcome to the Quiz Game!\n");
+
+    for (int i = 0; i < TOTAL_QUESTIONS; i++) {
+        displayQuestion(quiz[i]);
+        printf("Your answer (A/B/C/D): ");
+        scanf(" %c", &userAnswer);
+
+        // Convert to uppercase to simplify comparison
+        userAnswer = toupper(userAnswer);
+
+        if (userAnswer == quiz[i].answer) {
+            printf("Correct!\n\n");
+            score++;
+        } else {
+            printf("Wrong! The correct answer was %c.\n\n", quiz[i].answer);
+        }
+    }
+
+    printf("You scored %d out of %d.\n", score, TOTAL_QUESTIONS);
+    if (score == TOTAL_QUESTIONS) {
+        printf("Excellent work!\n");
+    } else if (score > 0) {
+        printf("Good effort!\n");
+    } else {
+        printf("Better luck next time!\n");
+    }
+
+    return 0;
+}
